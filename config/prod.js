@@ -8,4 +8,6 @@ module.exports = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     sendGridKey: process.env.SEND_GRID_KEY,
     redirectDomain: process.env.REDIRECT_DOMAIN,
+    leagueApiKey: process.env.RIOT_API_KEY,
+    baseURL: process.env.RIOT_API_BASE_URL,
 };
