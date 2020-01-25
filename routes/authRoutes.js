@@ -16,6 +16,12 @@ module.exports = (app) => {
     app.get('/api/logout', (req, res) => {
         console.log(req.isAuthenticated());
         req.logout();
+        req.logOut();
+        console.log('SESSION1: ', req.session);
+        req.session = null;
+        console.log('SESSION2: ', req.session);
+        req.session.destroy();
+        console.log('SESSION3: ', req.session);
         console.log(req.isAuthenticated());
         res.redirect(keys.redirectDomain);
     });

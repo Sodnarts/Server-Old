@@ -25,14 +25,13 @@ app.use(function(req, res, next) {
 });
 
 app.use(bodyParser.json());
-app.use(
-    cookieSession({
-        //Age: days hours min sec milisec
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        domain: 'sodnarts-api',
-        keys: [keys.cookieKey],
-    }),
-);
+const session = cookieSession({
+    //Age: days hours min sec milisec
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    domain: 'sodnarts-api',
+    keys: [keys.cookieKey],
+});
+app.use(session);
 
 app.use(passport.initialize());
 app.use(passport.session());
