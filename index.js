@@ -30,7 +30,8 @@ app.use(
         //Age: days hours min sec milisec
         maxAge: 30 * 24 * 60 * 60 * 1000,
         domain: 'sodnarts-api',
-        sameSite: 'lax',
+        sameSite: 'none',
+        secure: true,
         keys: [keys.cookieKey],
     }),
 );
