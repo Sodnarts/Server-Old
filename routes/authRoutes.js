@@ -19,10 +19,8 @@ module.exports = (app) => {
         req.logout();
         console.log(req.isAuthenticated());
         console.log(req.user);
-        console.log(req.session);
         req.session = null;
-        console.log(req.session);
-        res.send(req.session);
+        res.send(req.isAuthenticated());
     });
 
     app.get('/api/current_user', (req, res) => {
