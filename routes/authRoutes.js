@@ -17,9 +17,6 @@ module.exports = (app) => {
         console.log(req.isAuthenticated());
         req.logout();
         req.logOut();
-        console.log('SESSION1: ', req.session);
-        req.session = null;
-        console.log('SESSION2: ', req.session);
         console.log(req.isAuthenticated());
         res.redirect(keys.redirectDomain);
     });
