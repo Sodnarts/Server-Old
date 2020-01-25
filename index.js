@@ -21,6 +21,7 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'https://sodnarts.com');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Set-Cookie', 'Secure;SameSite=None;');
     next();
 });
 
@@ -30,8 +31,6 @@ app.use(
         //Age: days hours min sec milisec
         maxAge: 30 * 24 * 60 * 60 * 1000,
         domain: 'sodnarts-api',
-        sameSite: 'None',
-        secure: true,
         keys: [keys.cookieKey],
     }),
 );
