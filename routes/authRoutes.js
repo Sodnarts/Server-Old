@@ -17,10 +17,10 @@ module.exports = (app) => {
         console.log(req.isAuthenticated());
         console.log(req.user);
         req.logout();
-        req.logOut();
         console.log(req.isAuthenticated());
         console.log(req.user);
-        res.send(req.user);
+        const user = await req.user.save();
+        res.send(user);
     });
 
     app.get('/api/current_user', (req, res) => {
