@@ -9,8 +9,6 @@ const queues = require('../league-models/queueIdToName.json');
 
 module.exports = (app) => {
     app.post('/api/league/summoner', async (req, res) => {
-        console.log(req.body);
-
         const summoner = await axios.get(
             `${keys.baseURL}/summoner/v4/summoners/by-name/${req.body.summonerName}?api_key=${keys.leagueApiKey}`,
         );
