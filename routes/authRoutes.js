@@ -10,18 +10,17 @@ module.exports = (app) => {
     );
 
     app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
-        console.log(req.user);
         res.redirect(keys.redirectDomain);
     });
 
     app.get('/api/logout', (req, res) => {
+        console.log(req.isAuthenticated());
         req.logout();
+        console.log(req.isAuthenticated());
         res.redirect(keys.redirectDomain);
     });
 
     app.get('/api/current_user', (req, res) => {
-        console.log(req.user);
-
         res.send(req.user);
     });
 };
