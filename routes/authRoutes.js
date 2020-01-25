@@ -1,6 +1,5 @@
 const passport = require('passport');
 const keys = require('../config/keys');
-const logout = require('express-passport-logout');
 
 module.exports = (app) => {
     app.get(
@@ -17,11 +16,16 @@ module.exports = (app) => {
     app.get('/api/logout', (req, res) => {
         console.log(req.isAuthenticated());
         console.log(req.user);
-        logout();
         console.log(req.isAuthenticated());
         console.log(req.user);
+        req.session.destroy((err) => {
+            if (err) return next(err);
 
-        res.send(req.isAuthenticated());
+            req.logout();
+
+            res.sendStatus(200);
+        });
+        res.send(req.user);
     });
 
     app.get('/api/current_user', (req, res) => {
