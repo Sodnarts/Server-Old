@@ -14,12 +14,7 @@ module.exports = (app) => {
     });
 
     app.get('/api/logout', (req, res) => {
-        console.log(req.isAuthenticated());
-        console.log(req.user);
         req.logout();
-        console.log(req.isAuthenticated());
-        console.log(req.user);
-
         res.send(req.isAuthenticated());
     });
 
