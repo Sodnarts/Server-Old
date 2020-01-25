@@ -18,17 +18,26 @@ mongoose.connect(keys.mongoURI, options, (err) => {
 const app = express();
 
 app.use(function(req, res, next) {
-    const corsWhitelist = [
-        'https://sodnarts.com',
-        'https://sodnarts-react.firebaseapp.com',
-        'https://sodnarts-react.web.app',
-        'https://sodnarts-test.firebaseapp.com',
-        'https://sodnarts-test.web.app',
-    ];
-    if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
-        res.header('Access-Control-Allow-Origin', req.headers.origin);
+    if (process.env.NODE_ENV === 'development') {
+        res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Credentials', true);
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    }
+
+    if (process.env.NODE_ENV === 'production') {
+        const corsWhitelist = [
+            'https://sodnarts.com',
+            'https://sodnarts-react.firebaseapp.com',
+            'https://sodnarts-react.web.app',
+            'https://sodnarts-test.firebaseapp.com',
+            'https://sodnarts-test.web.app',
+        ];
+        console.log(req.headers.origin);
+        if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+            res.header('Access-Control-Allow-Origin', req.headers.origin);
+            res.header('Access-Control-Allow-Credentials', true);
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        }
     }
     next();
 });
@@ -45,16 +54,6 @@ require('./routes/surveyRoutes')(app);
 require('./routes/webShopRoutes')(app);
 require('./routes/leagueRoutes')(app);
 
-if (1 == 0) {
-    // Express will serve up production assets like our main.js file, or main.css file!
-    app.use(express.static('../client/build'));
-
-    // Express will serve up the index.html file, if it doesn't recognize the route.
-    const path = require('path');
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
-    });
-}
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
 
