@@ -16,10 +16,11 @@ module.exports = (app) => {
     app.get('/api/logout', async (req, res) => {
         console.log(req.isAuthenticated());
         console.log(req.user);
-        req.logout();
+        const user = await req.user.save();
+        user.logout();
         console.log(req.isAuthenticated());
         console.log(req.user);
-        const user = await req.user.save();
+        console.log(user);
         res.send(user);
     });
 
