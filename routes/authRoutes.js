@@ -13,7 +13,7 @@ module.exports = (app) => {
         res.redirect(keys.redirectDomain);
     });
 
-    app.get('/api/logout', (req, res) => {
+    app.get('/api/logout', async (req, res) => {
         console.log(req.isAuthenticated());
         console.log(req.user);
         req.logout();
