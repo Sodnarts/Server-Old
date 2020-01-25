@@ -18,6 +18,16 @@ mongoose.connect(keys.mongoURI, options, (err) => {
 const app = express();
 
 app.use(function(req, res, next) {
+    const corsWhitelist = [
+        'https://sodnarts.com',
+        'https://sodnarts-react.firebaseapp.com',
+        'https://sodnarts-react.web.app',
+        'https://sodnarts-test.firebaseapp.com',
+        'https://sodnarts-test.web.app',
+    ];
+    if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+        res.header('Access-Control-Allow-Origin', req.headers.origin);
+    }
     res.header('Access-Control-Allow-Origin', 'https://sodnarts.com');
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
