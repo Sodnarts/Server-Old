@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
             'https://sodnarts-test.firebaseapp.com',
             'https://sodnarts-test.web.app',
         ];
-        console.log(req.headers.origin);
+
         if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
             res.header('Access-Control-Allow-Origin', req.headers.origin);
             res.header('Access-Control-Allow-Credentials', true);
