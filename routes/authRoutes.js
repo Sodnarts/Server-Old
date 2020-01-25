@@ -16,16 +16,11 @@ module.exports = (app) => {
     app.get('/api/logout', (req, res) => {
         console.log(req.isAuthenticated());
         console.log(req.user);
+        req.logout();
         console.log(req.isAuthenticated());
         console.log(req.user);
-        req.session.destroy((err) => {
-            if (err) return next(err);
 
-            req.logout();
-
-            res.sendStatus(200);
-        });
-        res.send(req.user);
+        res.send(req.isAuthenticated());
     });
 
     app.get('/api/current_user', (req, res) => {

@@ -25,14 +25,14 @@ app.use(function(req, res, next) {
 });
 
 app.use(bodyParser.json());
-const session = cookieSession({
-    //Age: days hours min sec milisec
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    domain: 'sodnarts-api',
-    keys: [keys.cookieKey],
-});
-app.use(session);
-
+// const session = cookieSession({
+//     //Age: days hours min sec milisec
+//     maxAge: 30 * 24 * 60 * 60 * 1000,
+//     domain: 'sodnarts-api',
+//     keys: [keys.cookieKey],
+// });
+// app.use(session);
+app.use(require('express-session')({ secret: keys.cookieKey, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 require('./routes/settingsRoutes')(app);
