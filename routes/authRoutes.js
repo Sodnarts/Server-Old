@@ -13,15 +13,16 @@ module.exports = (app) => {
         res.redirect(keys.redirectDomain);
     });
 
-    app.get('/api/logout', async (req, res) => {
+    app.get('/api/logout', (req, res) => {
         console.log(req.isAuthenticated());
         console.log(req.user);
-        const user = await req.user.save();
-        user.logout();
+        req.logout();
         console.log(req.isAuthenticated());
         console.log(req.user);
-        console.log(user);
-        res.send(user);
+        console.log(req.session);
+        req.session = null;
+        console.log(req.session);
+        res.send(req.user);
     });
 
     app.get('/api/current_user', (req, res) => {
