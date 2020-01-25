@@ -22,7 +22,7 @@ module.exports = (app) => {
         console.log(req.session);
         req.session = null;
         console.log(req.session);
-        res.send(req.user);
+        res.send(req.session);
     });
 
     app.get('/api/current_user', (req, res) => {
