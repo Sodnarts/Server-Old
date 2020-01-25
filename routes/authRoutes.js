@@ -15,10 +15,12 @@ module.exports = (app) => {
 
     app.get('/api/logout', (req, res) => {
         console.log(req.isAuthenticated());
+        console.log(req.user);
         req.logout();
         req.logOut();
         console.log(req.isAuthenticated());
-        res.redirect(keys.redirectDomain);
+        console.log(req.user);
+        res.send(req.user);
     });
 
     app.get('/api/current_user', (req, res) => {
