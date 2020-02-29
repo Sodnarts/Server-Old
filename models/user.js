@@ -12,7 +12,8 @@ const userSchema = new Schema({
     lastName: { type: String, default: '' },
     email: { type: String, default: '' },
     phoneNo: { type: String, default: '' },
-    city: { type: String, default: '' }
+    city: { type: String, default: '' },
+    roles: { type: [String], default: ['League-Watcher'] },
 });
 
 mongoose.model('user', userSchema);

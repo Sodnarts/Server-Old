@@ -18,12 +18,6 @@ mongoose.connect(keys.mongoURI, options, (err) => {
 const app = express();
 
 app.use(function(req, res, next) {
-    if (process.env.NODE_ENV === 'development') {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Credentials', true);
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    }
-
     if (process.env.NODE_ENV === 'production') {
         const corsWhitelist = [
             'https://sodnarts.com',
@@ -32,12 +26,17 @@ app.use(function(req, res, next) {
             'https://sodnarts-test.firebaseapp.com',
             'https://sodnarts-test.web.app',
         ];
+        console.log('Request from: ', req.headers.origin);
 
         if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
             res.header('Access-Control-Allow-Origin', req.headers.origin);
             res.header('Access-Control-Allow-Credentials', true);
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         }
+    } else {
+        res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+        res.header('Access-Control-Allow-Credentials', true);
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     }
     next();
 });
@@ -53,6 +52,7 @@ require('./routes/billingRoutes')(app);
 require('./routes/surveyRoutes')(app);
 require('./routes/webShopRoutes')(app);
 require('./routes/leagueRoutes')(app);
+require('./routes/userAdminRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
