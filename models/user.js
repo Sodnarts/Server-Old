@@ -5,7 +5,7 @@ const userSchema = new Schema({
     googleID: String,
     googleName: String,
     credits: { type: Number, default: 0 },
-    theme: { type: String, default: 'blue' },
+    theme: { type: String, default: 'light' },
     language: { type: String, default: 'en' },
     address: { type: String, default: '' },
     firstName: { type: String, default: '' },
