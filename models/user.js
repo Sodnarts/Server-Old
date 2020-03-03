@@ -14,6 +14,7 @@ const userSchema = new Schema({
     phoneNo: { type: String, default: '' },
     city: { type: String, default: '' },
     roles: { type: [String], default: ['League-Watcher'] },
+    favoriteSN: { type: [String], default: ['Faker'] },
 });
 
 mongoose.model('user', userSchema);

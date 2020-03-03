@@ -90,4 +90,32 @@ module.exports = (app) => {
             res.status(400).send(err);
         }
     }
+
+    app.post('/api/league/favorites', async (req, res) => {
+        try {
+            if (req.body.type === 'ADD') {
+                req.user.favoriteSN.push(req.body.summonerName);
+            } else if (req.body.type === 'REMOVE') {
+                let tmpFavorites = [];
+                req.user.favoriteSN.filter((sn) => {
+                    !!(trimName(sn) !== trimName(req.body.summonerName)) ? tmpFavorites.push(sn) : false;
+                });
+                req.user.favoriteSN = tmpFavorites;
+            } else {
+                console.log('TYPE NOT SUPPORTED');
+            }
+            const user = await req.user.save();
+            res.send(user);
+        } catch (e) {
+            res.status(400).send('400 - Something went wrong. Please try again');
+        }
+    });
+
+    function trimName(sn) {
+        const tmpName = decodeURI(sn)
+            .toLowerCase()
+            .replace(' ', '');
+
+        return tmpName;
+    }
 };
