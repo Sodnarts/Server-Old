@@ -50,7 +50,11 @@ module.exports = (app) => {
                 };
                 response.push(match);
             }
-            res.send(response);
+            if (response.length > 0) {
+                res.send(response);
+            } else {
+                res.status(404).send('No more matches was found.');
+            }
         } catch (err) {
             console.log('POST: ', err.message);
             res.status(403).send(err);
