@@ -46,6 +46,14 @@ module.exports = (app) => {
                     winningTeam: winningTeam,
                     teamOneBans: matchDetailsArray[i].teams[0].bans,
                     teamTwoBans: matchDetailsArray[i].teams[1].bans,
+                    teamOneTowers: matchDetailsArray[i].teams[0].towerKills,
+                    teamTwoTowers: matchDetailsArray[i].teams[1].towerKills,
+                    teamOneBarons: matchDetailsArray[i].teams[0].baronKills,
+                    teamTwoBarons: matchDetailsArray[i].teams[1].baronKills,
+                    teamOneDragons: matchDetailsArray[i].teams[0].dragonKills,
+                    teamTwoDragons: matchDetailsArray[i].teams[1].dragonKills,
+                    teamOneRiftHeralds: matchDetailsArray[i].teams[0].riftHeraldKills,
+                    teamTwoRiftHeralds: matchDetailsArray[i].teams[1].riftHeraldKills,
                     participants: getParticipants(matchDetailsArray[i]),
                 };
                 response.push(match);
@@ -81,14 +89,17 @@ module.exports = (app) => {
                     kills: match.participants[i].stats.kills,
                     deaths: match.participants[i].stats.deaths,
                     assists: match.participants[i].stats.assists,
+                    damage: match.participants[i].stats.totalDamageDealtToChampions,
+                    gold: match.participants[i].state.goldEarned,
                     largestMultiKill: match.participants[i].stats.largestMultiKill,
                     champLevel: match.participants[i].stats.champLevel,
-                    minions: match.participants[i].stats.totalMinionsKilled,
+                    minions:
+                        match.participants[i].stats.totalMinionsKilled +
+                        match.participants[i].stats.neutralMinionsKilled,
                     summonerName: match.participantIdentities[i].player.summonerName,
                 };
                 arr.push(participant);
             }
-
             return arr;
         } catch (e) {
             res.status(400).send(err);
