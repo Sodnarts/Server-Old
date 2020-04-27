@@ -15,8 +15,9 @@ module.exports = (app) => {
             );
 
             const matchList = await axios.get(
-                `${keys.baseURL}/match/v4/matchlists/by-account/${summoner.data.accountId}?endIndex=${req.body
-                    .position + 10}&beginIndex=${req.body.position}&api_key=${keys.leagueApiKey}`,
+                `${keys.baseURL}/match/v4/matchlists/by-account/${summoner.data.accountId}?endIndex=${
+                    req.body.position + 10
+                }&beginIndex=${req.body.position}&api_key=${keys.leagueApiKey}`,
             );
             const matchDetailsArray = [];
 
@@ -90,7 +91,7 @@ module.exports = (app) => {
                     deaths: match.participants[i].stats.deaths,
                     assists: match.participants[i].stats.assists,
                     damage: match.participants[i].stats.totalDamageDealtToChampions,
-                    gold: match.participants[i].state.goldEarned,
+                    gold: match.participants[i].stats.goldEarned,
                     largestMultiKill: match.participants[i].stats.largestMultiKill,
                     champLevel: match.participants[i].stats.champLevel,
                     minions:
@@ -127,9 +128,7 @@ module.exports = (app) => {
     });
 
     function trimName(sn) {
-        const tmpName = decodeURI(sn)
-            .toLowerCase()
-            .replace(' ', '');
+        const tmpName = decodeURI(sn).toLowerCase().replace(' ', '');
 
         return tmpName;
     }
