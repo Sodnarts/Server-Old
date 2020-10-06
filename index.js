@@ -17,7 +17,7 @@ mongoose.connect(keys.mongoURI, options, (err) => {
 
 const app = express();
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     if (process.env.NODE_ENV === 'production') {
         const corsWhitelist = [
             'https://sodnarts.com',
@@ -53,6 +53,7 @@ require('./routes/surveyRoutes')(app);
 require('./routes/webShopRoutes')(app);
 require('./routes/leagueRoutes')(app);
 require('./routes/userAdminRoutes')(app);
+require('./routes/dbStructureRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
