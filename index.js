@@ -45,9 +45,11 @@ app.use(bodyParser.json());
 app.use(
     session({
         secret: keys.cookieKey,
-        resave: true,
+        resave: false,
         saveUninitialized: false,
-        // cookie: { maxAge: 30 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'none' },
+        cookie: !!(process.env.NODE_ENV === 'production')
+            ? { maxAge: 30 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'none' }
+            : { maxAge: 30 * 24 * 60 * 60 * 1000 },
     }),
 );
 app.use(passport.initialize());
