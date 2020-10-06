@@ -42,16 +42,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(bodyParser.json());
-app.use(
-    session({
-        secret: keys.cookieKey,
-        resave: false,
-        saveUninitialized: false,
-        cookie: !!(process.env.NODE_ENV === 'production')
-            ? { maxAge: 30 * 24 * 60 * 60 * 1000, secure: true, sameSite: 'none' }
-            : { maxAge: 30 * 24 * 60 * 60 * 1000 },
-    }),
-);
+app.use(session({ secret: keys.cookieKey, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 require('./routes/settingsRoutes')(app);
