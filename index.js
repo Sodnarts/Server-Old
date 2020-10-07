@@ -19,13 +19,7 @@ const app = express();
 
 app.use(function (req, res, next) {
     if (process.env.NODE_ENV === 'production') {
-        const corsWhitelist = [
-            'https://sodnarts.com',
-            'https://sodnarts-react.firebaseapp.com',
-            'https://sodnarts-react.web.app',
-            'https://sodnarts-test.firebaseapp.com',
-            'https://sodnarts-test.web.app',
-        ];
+        const corsWhitelist = [keys.corsURL_1, keys.corsURL_2, keys.corsURL_3, keys.corsURL_4, keys.corsURL_5];
         console.log('Request from: ', req.headers.origin);
 
         if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
