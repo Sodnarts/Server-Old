@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 require('./models/user');
 require('./models/Survey');
+require('./models/Recipes');
 require('./services/passport');
 const options = {
     useNewUrlParser: true,
@@ -46,6 +47,7 @@ require('./routes/billingRoutes')(app);
 require('./routes/surveyRoutes')(app);
 require('./routes/webShopRoutes')(app);
 require('./routes/leagueRoutes')(app);
+require('./routes/recipesRoutes')(app);
 require('./routes/userAdminRoutes')(app);
 require('./routes/dbStructureRoutes')(app);
 
