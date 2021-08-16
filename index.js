@@ -20,7 +20,7 @@ const app = express();
 
 app.use(function (req, res, next) {
     if (process.env.NODE_ENV === 'production') {
-        const corsWhitelist = [keys.corsURL_1, keys.corsURL_2, keys.corsURL_3, keys.corsURL_4, keys.corsURL_5];
+        const corsWhitelist = [keys.corsURL_1, keys.corsURL_2, keys.corsURL_3, keys.corsURL_4, keys.corsURL_5, key.corsURL_6, keys.corsURL_7, keys.corsURL_8];
         console.log('Request from: ', req.headers.origin);
 
         if (corsWhitelist.indexOf(req.headers.origin) !== -1) {

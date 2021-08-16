@@ -15,4 +15,8 @@ module.exports = {
     corsURL_3: process.env.CORS_URL_3,
     corsURL_4: process.env.CORS_URL_4,
     corsURL_5: process.env.CORS_URL_5,
+
+    corsURL_6: process.env.CORS_URL_6,
+    corsURL_7: process.env.CORS_URL_7,
+    corsURL_8: process.env.CORS_URL_8,
 };
