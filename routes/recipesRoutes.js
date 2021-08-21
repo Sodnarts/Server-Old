@@ -16,12 +16,14 @@ module.exports = (app) => {
     });
 
     app.post('/api/recipes/new', async (req, res) => {
-        const { ingredients, instructions, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, image } = req.body.recipe;
+        const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, image } = req.body.recipe;
 
         console.log(req.body);
+        console.log("SubCats: ", req.body.subCategories);
         const recipe = new Recipe({
             ingredients,
             instructions,
+            subCategories,
             name,
             prepTimeMax,
             prepTimeMin,
@@ -37,12 +39,13 @@ module.exports = (app) => {
     });
 
     app.post('/api/recipes/edit', async (req, res) => {
-        const { ingredients, instructions, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, image } = req.body.recipe;
+        const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, image } = req.body.recipe;
         const recipe = await Recipe.find({ _id: req.body.recipe._id });
 
         console.log("RECIPE12 ", recipe[0], req.body.recipe)
         recipe[0].ingredients = ingredients;
         recipe[0].instructions = instructions;
+        recipe[0].subCategories = subCategories;
         recipe[0].name = name;
         recipe[0].prepTimeMax = prepTimeMax;
         recipe[0].prepTimeMin = prepTimeMin;

@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const recipeSchema = new Schema({
     ingredients: [{ ingredient: String, volume: String }],
     instructions: { titles: [{ key: String, value: String }], descriptions: [{ key: String, value: String }] },
+    subCategories: [{ value: String, label: String }],
     name: { type: String, default: "A Dish" },
     prepTimeMax: { type: String, default: 0 },
     prepTimeMin: { type: String, default: 0 },
