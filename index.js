@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 require('./models/user');
 require('./models/Survey');
 require('./models/Recipes');
+require('./models/Image');
 require('./services/passport');
 const options = {
     useNewUrlParser: true,
@@ -36,6 +37,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(session({ secret: keys.cookieKey, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());

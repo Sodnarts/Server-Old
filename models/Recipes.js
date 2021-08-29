@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-
+const ImageSchema = require('./Image');
 
 const recipeSchema = new Schema({
     ingredients: [{ ingredient: String, volume: String }],
@@ -12,7 +12,7 @@ const recipeSchema = new Schema({
     portions: { type: String, default: 0 },
     type: { type: String, default: 'Dinner' },
     timeCreated: Number,
-    image: { type: String, default: null },
+    image: { type: ImageSchema, default: null },
 });
 
 mongoose.model('recipes', recipeSchema);

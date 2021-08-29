@@ -1,6 +1,19 @@
 const mongoose = require('mongoose');
-
+const multer = require('multer');
 const Recipe = mongoose.model('recipes');
+const Image = mongoose.model('image');
+const fs = require('fs');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __dirname + '/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+var upload = multer({ storage: storage });
 
 module.exports = (app) => {
     app.get('/api/recipes', async (req, res) => {
@@ -15,11 +28,21 @@ module.exports = (app) => {
         res.send(recipe[0]);
     });
 
-    app.post('/api/recipes/new', async (req, res) => {
-        const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, image } = req.body.recipe;
+    app.post('/api/recipes/new', upload.single('image'), async (req, res) => {
+       
+        const json = JSON.parse(req.body.recipe)
+        const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated } = json;
+        
+        let image = null
+        if (req.file) {
+            image = new Image({
+                img: {
+                    data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+                    contentType: 'image/png'
+                }
+            });
+        }
 
-        console.log(req.body);
-        console.log("SubCats: ", req.body.subCategories);
         const recipe = new Recipe({
             ingredients,
             instructions,
@@ -30,19 +53,30 @@ module.exports = (app) => {
             portions,
             type,
             timeCreated,
-            image
+            image: image
         });
-
         await recipe.save();
         const recipes = await Recipe.find({});
         res.send(recipes);
     });
 
-    app.post('/api/recipes/edit', async (req, res) => {
-        const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, image } = req.body.recipe;
-        const recipe = await Recipe.find({ _id: req.body.recipe._id });
+    app.post('/api/recipes/edit', upload.single('image'), async (req, res) => {
+        console.log("BODY: ",req.body);
+        const json = JSON.parse(req.body.recipe)
+        const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, _id } = json;
+        
+        const recipe = await Recipe.find({ _id });
 
-        console.log("RECIPE12 ", recipe[0], req.body.recipe)
+        let image = null
+        if (req.file) {
+            image = new Image({
+                img: {
+                    data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+                    contentType: 'image/png'
+                }
+            });
+        }
+
         recipe[0].ingredients = ingredients;
         recipe[0].instructions = instructions;
         recipe[0].subCategories = subCategories;
