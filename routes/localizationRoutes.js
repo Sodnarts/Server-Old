@@ -16,18 +16,18 @@ module.exports = (app) => {
     });
 
     app.post('/api/projects/new', async (req, res) => {
-        const { title, description, languages, strings } = req.body;
+        const { title, description, languages, translations } = req.body;
         
-        const translations = []
-        strings.map(s => {
-            translations.push(new Translation({strings: s}));
+        const newTranslations = []
+        translations.strings.map(s => {
+            newTranslations.push(new Translation({strings: s}));
         })
 
         const project = new Project({
             title,
             description,
             languages,
-            translations: translations,
+            translations: newTranslations,
             lastEditDate: Date.now(),
         });
 
