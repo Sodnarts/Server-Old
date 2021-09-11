@@ -19,8 +19,8 @@ module.exports = (app) => {
         const { title, description, languages, translations } = req.body;
         console.log(req.body);
         const newTranslations = []
-        translations.strings.map(s => {
-            newTranslations.push(new Translation({strings: s}));
+        translations.map(t => {
+            newTranslations.push(new Translation({strings: t.strings}));
         })
 
         const project = new Project({
