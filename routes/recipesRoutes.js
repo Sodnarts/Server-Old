@@ -61,7 +61,6 @@ module.exports = (app) => {
     });
 
     app.post('/api/recipes/edit', upload.single('image'), async (req, res) => {
-        console.log("BODY: ",req.body);
         const json = JSON.parse(req.body.recipe)
         const { ingredients, instructions, subCategories, name, prepTimeMax, prepTimeMin, portions, type, timeCreated, _id } = json;
         
@@ -88,7 +87,6 @@ module.exports = (app) => {
         recipe[0].timeCreated = timeCreated;
         recipe[0].image = image;
 
-        console.log(recipe[0])
         await recipe[0].save();
         const recipes = await Recipe.find({});
         res.send(recipes);

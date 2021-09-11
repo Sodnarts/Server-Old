@@ -10,6 +10,8 @@ require('./models/Survey');
 require('./models/Recipes');
 require('./models/Image');
 require('./services/passport');
+require('./models/localization/Project');
+
 const options = {
     useNewUrlParser: true,
 };
@@ -52,6 +54,7 @@ require('./routes/leagueRoutes')(app);
 require('./routes/recipesRoutes')(app);
 require('./routes/userAdminRoutes')(app);
 require('./routes/dbStructureRoutes')(app);
+require('./routes/localizationRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
