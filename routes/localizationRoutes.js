@@ -17,7 +17,7 @@ module.exports = (app) => {
 
     app.post('/api/projects/new', async (req, res) => {
         const { title, description, languages, translations } = req.body;
-        console.log(req.body);
+
         const newTranslations = []
         translations.map(t => {
             newTranslations.push(new Translation({strings: t.strings}));
