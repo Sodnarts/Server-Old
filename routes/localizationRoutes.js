@@ -3,6 +3,23 @@ const Project = mongoose.model('project');
 const Translation = mongoose.model('translations');
 
 module.exports = (app) => {
+    app.get('/api/user', async (req, res) => {
+        const user = {
+            name: "Ola",
+            email: "mail@mail.no",
+        }
+
+        if (req.get('Authorization') != "Bearer null") {
+            res.send(user)
+        } else {
+            res.status(401).send("Not logged in.")
+        }
+    })
+
+    app.post('/api/logout', async (req, res) => {
+        res.send("OK")
+    })
+
     app.get('/api/projects', async (req, res) => {
         const projects = await Project.find({}).select({ description: false, languages: false, translations: false, lastEditDate: false });
         console.log("GET /projects: -- ", projects)
