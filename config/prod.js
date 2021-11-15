@@ -10,6 +10,7 @@ module.exports = {
     redirectDomain: process.env.REDIRECT_DOMAIN,
     leagueApiKey: process.env.RIOT_API_KEY,
     baseURL: process.env.RIOT_API_BASE_URL,
+    continentalBaseUrl: process.env.RIOT_API_CONTINENTAL_URL,
     corsURL_1: process.env.CORS_URL_1,
     corsURL_2: process.env.CORS_URL_2,
     corsURL_3: process.env.CORS_URL_3,
