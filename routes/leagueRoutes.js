@@ -10,21 +10,23 @@ const queues = require('../league-models/queueIdToName.json');
 module.exports = (app) => {
     app.post('/api/league/summoner', async (req, res) => {
         console.log(req.body)
+
         try {
             const summoner = await axios.get(
                 `${keys.baseURL}/summoner/v4/summoners/by-name/${req.body.summonerName}?api_key=${keys.leagueApiKey}`,
             );
 
             const matchList = await axios.get(
-                `${keys.baseURL}/match/v4/matchlists/by-account/${summoner.data.accountId}?endIndex=${
-                    req.body.position + 10
-                }&beginIndex=${req.body.position}&api_key=${keys.leagueApiKey}`,
+                `${keys.continentalBaseUrl}/match/v5/matches/by-puuid/${summoner.data.puuid}/ids?start=${
+                    req.body.position
+                }&count=${req.body.position + 10}&api_key=${keys.leagueApiKey}`,
             );
-            const matchDetailsArray = [];
 
-            for (let i = 0; i < matchList.data.matches.length; i++) {
+            const matchDetailsArray = [];
+                
+            for (let i = 0; i < matchList.data.length; i++) {
                 const matchDetails = await axios.get(
-                    `${keys.baseURL}/match/v4/matches/${matchList.data.matches[i].gameId}?api_key=${keys.leagueApiKey}`,
+                    `${keys.continentalBaseUrl}/match/v5/matches/${matchList.data[i]}?api_key=${keys.leagueApiKey}`,
                 );
                 matchDetailsArray.push(matchDetails.data);
             }
@@ -33,33 +35,35 @@ module.exports = (app) => {
 
             for (let i = 0; i < matchDetailsArray.length; i++) {
                 let winningTeam = 100;
-                if (matchDetailsArray[i].teams[1].win == 'Win') {
+                if (matchDetailsArray[i].info.teams[1].win == 'Win') {
                     winningTeam = 200;
                 }
 
                 const match = {
                     selfName: req.body.summonerName,
-                    mapId: matchDetailsArray[i].mapId,
-                    mapName: maps[matchDetailsArray[i].mapId],
-                    gameCreation: matchDetailsArray[i].gameCreation,
-                    gameDuration: matchDetailsArray[i].gameDuration,
-                    queueId: matchDetailsArray[i].queueId,
-                    queueName: queues[matchDetailsArray[i].queueId],
+                    mapId: matchDetailsArray[i].info.mapId,
+                    mapName: maps[matchDetailsArray[i].info.mapId],
+                    gameCreation: matchDetailsArray[i].info.gameCreation,
+                    gameDuration: matchDetailsArray[i].info.gameDuration,
+                    queueId: matchDetailsArray[i].info.queueId,
+                    queueName: queues[matchDetailsArray[i].info.queueId],
                     winningTeam: winningTeam,
-                    teamOneBans: matchDetailsArray[i].teams[0].bans,
-                    teamTwoBans: matchDetailsArray[i].teams[1].bans,
-                    teamOneTowers: matchDetailsArray[i].teams[0].towerKills,
-                    teamTwoTowers: matchDetailsArray[i].teams[1].towerKills,
-                    teamOneBarons: matchDetailsArray[i].teams[0].baronKills,
-                    teamTwoBarons: matchDetailsArray[i].teams[1].baronKills,
-                    teamOneDragons: matchDetailsArray[i].teams[0].dragonKills,
-                    teamTwoDragons: matchDetailsArray[i].teams[1].dragonKills,
-                    teamOneRiftHeralds: matchDetailsArray[i].teams[0].riftHeraldKills,
-                    teamTwoRiftHeralds: matchDetailsArray[i].teams[1].riftHeraldKills,
+                    teamOneBans: matchDetailsArray[i].info.teams[0].bans,
+                    teamTwoBans: matchDetailsArray[i].info.teams[1].bans,
+                    teamOneTowers: matchDetailsArray[i].info.teams[0].objectives.tower.kills,
+                    teamTwoTowers: matchDetailsArray[i].info.teams[1].objectives.tower.kills,
+                    teamOneBarons: matchDetailsArray[i].info.teams[0].objectives.baron.kills,
+                    teamTwoBarons: matchDetailsArray[i].info.teams[1].objectives.baron.kills,
+                    teamOneDragons: matchDetailsArray[i].info.teams[0].objectives.dragon.kills,
+                    teamTwoDragons: matchDetailsArray[i].info.teams[1].objectives.dragon.kills,
+                    teamOneRiftHeralds: matchDetailsArray[i].info.teams[0].objectives.riftHerald.kills,
+                    teamTwoRiftHeralds: matchDetailsArray[i].info.teams[1].objectives.riftHerald.kills,
                     participants: getParticipants(matchDetailsArray[i]),
                 };
+
                 response.push(match);
             }
+
             if (response.length > 0) {
                 res.send(response);
             } else {
@@ -74,37 +78,38 @@ module.exports = (app) => {
     function getParticipants(match) {
         try {
             const arr = [];
-            for (let i = 0; i < match.participants.length; i++) {
+
+            for (let i = 0; i < match.info.participants.length; i++) {
+
                 const participant = {
-                    teamId: match.participants[i].teamId,
-                    championId: match.participants[i].championId,
-                    championName: champions[match.participants[i].championId],
-                    spell1: spells[match.participants[i].spell1Id],
-                    spell2: spells[match.participants[i].spell2Id],
-                    item0: match.participants[i].stats.item0,
-                    item1: match.participants[i].stats.item1,
-                    item2: match.participants[i].stats.item2,
-                    item3: match.participants[i].stats.item3,
-                    item4: match.participants[i].stats.item4,
-                    item5: match.participants[i].stats.item5,
-                    item6: match.participants[i].stats.item6,
-                    kills: match.participants[i].stats.kills,
-                    deaths: match.participants[i].stats.deaths,
-                    assists: match.participants[i].stats.assists,
-                    damage: match.participants[i].stats.totalDamageDealtToChampions,
-                    gold: match.participants[i].stats.goldEarned,
-                    largestMultiKill: match.participants[i].stats.largestMultiKill,
-                    champLevel: match.participants[i].stats.champLevel,
+                    teamId: match.info.participants[i].teamId,
+                    championId: match.info.participants[i].championId,
+                    championName: champions[match.info.participants[i].championId],
+                    spell1: spells[match.info.participants[i].summoner1Id],
+                    spell2: spells[match.info.participants[i].summoner2Id],
+                    item0: match.info.participants[i].item0,
+                    item1: match.info.participants[i].item1,
+                    item2: match.info.participants[i].item2,
+                    item3: match.info.participants[i].item3,
+                    item4: match.info.participants[i].item4,
+                    item5: match.info.participants[i].item5,
+                    item6: match.info.participants[i].item6,
+                    kills: match.info.participants[i].kills,
+                    deaths: match.info.participants[i].deaths,
+                    assists: match.info.participants[i].assists,
+                    damage: match.info.participants[i].totalDamageDealtToChampions,
+                    gold: match.info.participants[i].goldEarned,
+                    largestMultiKill: match.info.participants[i].largestMultiKill,
+                    champLevel: match.info.participants[i].champLevel,
                     minions:
-                        match.participants[i].stats.totalMinionsKilled +
-                        match.participants[i].stats.neutralMinionsKilled,
-                    summonerName: match.participantIdentities[i].player.summonerName,
+                        match.info.participants[i].totalMinionsKilled +
+                        match.info.participants[i].neutralMinionsKilled,
+                    summonerName: match.info.participants[i].summonerName
                 };
                 arr.push(participant);
             }
             return arr;
         } catch (e) {
-            res.status(400).send(err);
         }
     }
 
