@@ -25,8 +25,10 @@ app.use(function (req, res, next) {
     if (process.env.NODE_ENV === 'production') {
         const corsWhitelist = [keys.corsURL_1, keys.corsURL_2, keys.corsURL_3, keys.corsURL_4, keys.corsURL_5, keys.corsURL_6, keys.corsURL_7, keys.corsURL_8, keys.corsURL_9, keys.corsURL_10, keys.corsURL_11, keys.corsURL_12, keys.corsURL_13];
         console.log('Request from: ', req.headers.origin);
-
+        console.log("Keys: ", keys.corsURL_10, " -- ", req.headers.origin)
+        console.log("Cors Key 10 valid?: ", keys.corsURL_10 == req.headers.origin)
         if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+            console.log(corsWhitelist.indexOf(req.headers.origin))
             res.header('Access-Control-Allow-Origin', req.headers.origin);
             res.header('Access-Control-Allow-Credentials', true);
             res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
