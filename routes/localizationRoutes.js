@@ -8,7 +8,20 @@ module.exports = (app) => {
             name: "Ola",
             email: "mail@mail.no",
         }
+        console.log(req.body);
 
+        if (req.get('Authorization') != "Bearer null") {
+            res.send(user)
+        } else {
+            res.status(401).send("Not logged in.")
+        }
+    })
+
+    app.post('/api/user', async (req, res) => {
+        const user = {
+            name: "Ola",
+            email: "mail@mail.no",
+        }
         if (req.get('Authorization') != "Bearer null") {
             res.send(user)
         } else {
