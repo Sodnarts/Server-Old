@@ -8,15 +8,15 @@ module.exports = (app) => {
             messages:
             [
                 { 
-                    messageText: "App is actived but can not be used until Banking LTD starts to use the new system", 
-                    messageHeader: "Info from Banking LTD",
+                    messageText: "App is actived but can not be used until System starts to use the new system", 
+                    messageHeader: "Info from System",
                     messageDestination: "requestList", 
                     messageStartTime: "2022-01-18T08:46:02Z", 
                     messageStopTime: "2022-12-18T08:46:02Z" 
                 },
                 
                 {
-                    messageText: "Welcome to Secure Access App", 
+                    messageText: "Welcome to the App", 
                     messageHeader: "Welcome", 
                     messageDestination: "popup", 
                     messageStartTime: "2022-01-18T08:46:02Z", 
