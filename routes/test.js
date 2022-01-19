@@ -8,7 +8,7 @@ module.exports = (app) => {
             messages:
             [
                 { 
-                    messageText: "App is actived but can not be used until System starts to use the new system", 
+                    messageText: "App is activated but can not be used until System starts to use the new system", 
                     messageHeader: "Info from System",
                     messageDestination: "requestList", 
                     messageStartTime: "2022-01-18T08:46:02Z", 
