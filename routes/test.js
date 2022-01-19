@@ -14,8 +14,29 @@ module.exports = (app) => {
                     messageStartTime: "2022-01-18T08:46:02Z", 
                     messageStopTime: "2022-12-18T08:46:02Z" 
                 },
+                { 
+                    messageText: "App is activated but can not be used until System starts to use the new system", 
+                    messageHeader: "Info from System",
+                    messageDestination: "requestList", 
+                    messageStartTime: "2022-01-18T08:46:02Z", 
+                    messageStopTime: "2022-12-18T08:46:02Z" 
+                },
+                { 
+                    messageText: "App is activated but can not be used until System starts to use the new system", 
+                    messageHeader: "Info from System",
+                    messageDestination: "requestList", 
+                    messageStartTime: "2022-01-18T08:46:02Z", 
+                    messageStopTime: "2022-12-18T08:46:02Z" 
+                },
                 
                 {
+                    messageText: "Welcome to the App", 
+                    messageHeader: "Welcome", 
+                    messageDestination: "popup", 
+                    messageStartTime: "2022-01-18T08:46:02Z", 
+                    messageStopTime: "2022-01-18T08:46:02Z" 
+                },
+                 {
                     messageText: "Welcome to the App", 
                     messageHeader: "Welcome", 
                     messageDestination: "popup", 
