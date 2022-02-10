@@ -61,4 +61,22 @@ module.exports = (app) => {
         ]
         res.send(test)
     });
+
+    app.post('/api/dummy1', async (req, res) => {
+        console.log(req.body)
+        const test = [
+            {id: 1, name: "Minced meat", isShopped: false},
+            {id: 2, name: "Taco spice", isShopped: false},
+            {id: 3, name: "Taco sauce", isShopped: false},
+            {id: 4, name: "Tortillas", isShopped: false},
+            {id: 5, name: "Salad", isShopped: false},
+            {id: 6, name: "Onion", isShopped: false},
+            {id: 7, name: "Corn", isShopped: false},
+            {id: 8, name: "Tomatoes", isShopped: false},
+            {id: 9, name: "Mushrooms", isShopped: false},
+            {id: 10, name: "Cucumber", isShopped: false},
+            {id: 11, name: "Pepsi", isShopped: false}
+        ]
+        res.send(test)
+    });
 };
