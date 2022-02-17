@@ -65,6 +65,6 @@ module.exports = (app) => {
     app.post('/api/dummy1', async (req, res) => {
         console.log(req.body)
       
-        res.send(req.body.payload)
+        res.send(req.body)
     });
 };
